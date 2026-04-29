@@ -144,8 +144,6 @@ El resumen visible para el usuario muestra los conteos durante la importación (
 
 ## Limitaciones y posibles mejoras
 
-## Limitaciones y posibles mejoras
-
 - La edición conserva `category` como vocabulario controlado (`POI_CATEGORIES` + tipo `PoiCategory`); el select usa `AppSelectComponent<PoiCategory>` con opciones tipadas.
 - **Drag-to-move implementado:** `MapDragBinder` captura `mousedown` en la capa de POIs, rastrea `mousemove` y emite un `MapDragEvent` en `mouseup` si el puntero se movió; `app.ts` delega a `PoiStoreService.move()`. El `dragPan` del mapa se desactiva durante el arrastre para evitar conflictos.
 - No hay tests E2E; el proyecto incluye sólo tests unitarios.
