@@ -2,10 +2,134 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en-US" target-language="es" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="notification.restored" datatype="html">
+        <source>Restored <x id="PH" equiv-text="restored.features.length"/> saved point(s).</source>
+        <target>Se restauraron <x id="PH" equiv-text="restored.features.length"/> punto(s) guardado(s).</target>
+      </trans-unit>
+      <trans-unit id="notification.imported" datatype="html">
+        <source>Imported <x id="PH" equiv-text="result.imported.length"/> point(s).</source>
+        <target>Se importaron <x id="PH" equiv-text="result.imported.length"/> punto(s).</target>
+      </trans-unit>
+      <trans-unit id="notification.importFailed" datatype="html">
+        <source>Failed to import file.</source>
+        <target>Error al importar el archivo.</target>
+      </trans-unit>
+      <trans-unit id="notification.nothingToExport" datatype="html">
+        <source>Nothing to export.</source>
+        <target>No hay nada que exportar.</target>
+      </trans-unit>
+      <trans-unit id="notification.exported" datatype="html">
+        <source>GeoJSON exported.</source>
+        <target>GeoJSON exportado.</target>
+      </trans-unit>
+      <trans-unit id="notification.stateSaved" datatype="html">
+        <source>State saved locally.</source>
+        <target>Estado guardado localmente.</target>
+      </trans-unit>
+      <trans-unit id="dialog.clearTitle" datatype="html">
+        <source>Clear local state</source>
+        <target>Limpiar estado local</target>
+      </trans-unit>
+      <trans-unit id="dialog.clearBody" datatype="html">
+        <source>This removes all points and clears the saved state. Continue?</source>
+        <target>Esto eliminará todos los puntos y borrará el estado guardado. ¿Continuar?</target>
+      </trans-unit>
+      <trans-unit id="dialog.clearConfirm" datatype="html">
+        <source>Clear</source>
+        <target>Limpiar</target>
+      </trans-unit>
+      <trans-unit id="notification.stateCleared" datatype="html">
+        <source>Local state cleared.</source>
+        <target>Estado local eliminado.</target>
+      </trans-unit>
+      <trans-unit id="dialog.deleteTitle" datatype="html">
+        <source>Delete point</source>
+        <target>Eliminar punto</target>
+      </trans-unit>
+      <trans-unit id="dialog.deleteBody" datatype="html">
+        <source>Delete &quot;<x id="PH" equiv-text="feature.properties.name"/>&quot;?</source>
+        <target>¿Eliminar &quot;<x id="PH" equiv-text="feature.properties.name"/>&quot;?</target>
+      </trans-unit>
+      <trans-unit id="dialog.deleteConfirm" datatype="html">
+        <source>Delete</source>
+        <target>Eliminar</target>
+      </trans-unit>
       <trans-unit id="actionsBar.ariaLabel" datatype="html">
         <source>Editor actions</source>
         <target>Acciones del editor</target>
       </trans-unit>
+      <trans-unit id="actionsBar.importLabel" datatype="html">
+        <source>Import GeoJSON</source>
+        <target>Importar GeoJSON</target>
+      </trans-unit>
+      <trans-unit id="actionsBar.exportLabel" datatype="html">
+        <source>Export</source>
+        <target>Exportar</target>
+      </trans-unit>
+      <trans-unit id="actionsBar.saveLabel" datatype="html">
+        <source>Save</source>
+        <target>Guardar</target>
+      </trans-unit>
+      <trans-unit id="actionsBar.cancelAdd" datatype="html">
+        <source>Cancel add</source>
+        <target>Cancelar adición</target>
+      </trans-unit>
+      <trans-unit id="actionsBar.addPoint" datatype="html">
+        <source>Add point</source>
+        <target>Agregar punto</target>
+      </trans-unit>
+      <trans-unit id="actionsBar.snapOn" datatype="html">
+        <source>Snap: on</source>
+        <target>Ajuste: activado</target>
+      </trans-unit>
+      <trans-unit id="actionsBar.snapOff" datatype="html">
+        <source>Snap: off</source>
+        <target>Ajuste: desactivado</target>
+      </trans-unit>
+      <trans-unit id="actionsBar.clearLabel" datatype="html">
+        <source>Clear</source>
+        <target>Limpiar</target>
+      </trans-unit>
+      <trans-unit id="poiEditor.nameLabel" datatype="html">
+        <source>Name</source>
+        <target>Nombre</target>
+      </trans-unit>
+      <trans-unit id="poiEditor.categoryLabel" datatype="html">
+        <source>Category</source>
+        <target>Categoría</target>
+      </trans-unit>
+      <trans-unit id="poiEditor.cancelButton" datatype="html">
+        <source>Cancel</source>
+        <target>Cancelar</target>
+      </trans-unit>
+      <trans-unit id="poiEditor.saveButton" datatype="html">
+        <source>Save</source>
+        <target>Guardar</target>
+      </trans-unit>
+      <trans-unit id="poiFilter.ariaLabel" datatype="html">
+        <source>Filter points of interest</source>
+        <target>Filtrar puntos de interés</target>
+      </trans-unit>
+      <trans-unit id="poiFilter.searchLabel" datatype="html">
+        <source>Search by name or category</source>
+        <target>Buscar por nombre o categoría</target>
+      </trans-unit>
+      <trans-unit id="poiList.emptyMessage" datatype="html">
+        <source>No points yet. Import a GeoJSON file or click &apos;Add point&apos;.</source>
+        <target>Aún no hay puntos. Importa un archivo GeoJSON o haz clic en &apos;Agregar punto&apos;.</target>
+      </trans-unit>
+      <trans-unit id="poiList.editAriaLabel" datatype="html">
+        <source>Edit point</source>
+        <target>Editar punto</target>
+      </trans-unit>
+      <trans-unit id="poiList.deleteAriaLabel" datatype="html">
+        <source>Delete point</source>
+        <target>Eliminar punto</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
+
       <trans-unit id="actionsBar.importLabel" datatype="html">
         <source>Import GeoJSON</source>
         <target>Importar GeoJSON</target>

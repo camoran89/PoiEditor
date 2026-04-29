@@ -83,7 +83,7 @@ export class App implements OnInit {
     const restored = this.persistence.load();
     if (restored !== null && restored.features.length > 0) {
       this.store.setAll(restored.features);
-      this.notifications.notify(`Restored ${restored.features.length} saved point(s).`);
+      this.notifications.notify($localize`:@@notification.restored:Restored ${restored.features.length} saved point(s).`);
     }
   }
 
@@ -112,32 +112,32 @@ export class App implements OnInit {
       const result = await this.importer.importFromFile(file);
       this.store.setAll(result.imported);
       this.importSummary.set(this.summaryService.summarize(result));
-      this.notifications.notify(`Imported ${result.imported.length} point(s).`);
+      this.notifications.notify($localize`:@@notification.imported:Imported ${result.imported.length} point(s).`);
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Failed to import file.';
+      const message = error instanceof Error ? error.message : $localize`:@@notification.importFailed:Failed to import file.`;
       this.notifications.notify(message);
     }
   }
 
   protected onExport(): void {
     if (this.store.count() === 0) {
-      this.notifications.notify('Nothing to export.');
+      this.notifications.notify($localize`:@@notification.nothingToExport:Nothing to export.`);
       return;
     }
     this.exporter.export(this.store.collection());
-    this.notifications.notify('GeoJSON exported.');
+    this.notifications.notify($localize`:@@notification.exported:GeoJSON exported.`);
   }
 
   protected onSave(): void {
     this.persistence.save(this.store.collection());
-    this.notifications.notify('State saved locally.');
+    this.notifications.notify($localize`:@@notification.stateSaved:State saved locally.`);
   }
 
   protected async onClear(): Promise<void> {
     const confirmed = await this.confirmService.confirm(
-      'Clear local state',
-      'This removes all points and clears the saved state. Continue?',
-      'Clear'
+      $localize`:@@dialog.clearTitle:Clear local state`,
+      $localize`:@@dialog.clearBody:This removes all points and clears the saved state. Continue?`,
+      $localize`:@@dialog.clearConfirm:Clear`
     );
     if (!confirmed) {
       return;
@@ -145,7 +145,7 @@ export class App implements OnInit {
     this.persistence.clear();
     this.store.clear();
     this.importSummary.set(null);
-    this.notifications.notify('Local state cleared.');
+    this.notifications.notify($localize`:@@notification.stateCleared:Local state cleared.`);
   }
 
   protected async onMapClicked(coordinates: Coordinates): Promise<void> {
@@ -185,9 +185,9 @@ export class App implements OnInit {
       return;
     }
     const confirmed = await this.confirmService.confirm(
-      'Delete point',
-      `Delete "${feature.properties.name}"?`,
-      'Delete'
+      $localize`:@@dialog.deleteTitle:Delete point`,
+      $localize`:@@dialog.deleteBody:Delete "${feature.properties.name}"?`,
+      $localize`:@@dialog.deleteConfirm:Delete`
     );
     if (confirmed) {
       this.store.remove(id);

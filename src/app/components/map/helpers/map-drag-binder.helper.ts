@@ -1,43 +1,15 @@
-import type { Map as MapLibreMap, MapMouseEvent } from 'maplibre-gl';
-import { POI_LAYER_ID } from '../../../core/constants/poi-layer-id.const';
+import type { Map as MapLibreMap } from 'maplibre-gl';
 import { MapDragEvent } from './map-drag-event.interface';
+import { MapMouseDragBinder } from './map-mouse-drag-binder.helper';
+import { MapTouchDragBinder } from './map-touch-drag-binder.helper';
 
 export class MapDragBinder {
+  private readonly mouseBinder = new MapMouseDragBinder();
+  private readonly touchBinder = new MapTouchDragBinder();
+
   bind(map: MapLibreMap, onDragEnd: (event: MapDragEvent) => void): void {
-    map.on('mousedown', POI_LAYER_ID, (e) => {
-      const feature = e.features?.[0];
-      if (!feature || typeof feature.id !== 'string') {
-        return;
-      }
-      const featureId = feature.id;
-      e.preventDefault();
-
-      let dragged = false;
-      const canvas = map.getCanvas();
-      canvas.style.cursor = 'grabbing';
-      map.dragPan.disable();
-
-      const onMove = () => {
-        dragged = true;
-      };
-
-      const onUp = (upEvent: MapMouseEvent) => {
-        map.off('mousemove', onMove);
-        map.off('mouseup', onUp);
-        map.dragPan.enable();
-        canvas.style.cursor = '';
-
-        if (!dragged) {
-          return;
-        }
-        onDragEnd({
-          featureId,
-          coordinates: [upEvent.lngLat.lng, upEvent.lngLat.lat],
-        });
-      };
-
-      map.on('mousemove', onMove);
-      map.on('mouseup', onUp);
-    });
+    this.mouseBinder.bind(map, onDragEnd);
+    this.touchBinder.bind(map, onDragEnd);
   }
 }
+
