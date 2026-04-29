@@ -1,0 +1,20 @@
+<app-alert
+  [severity]="severity()"
+  title="Import summary"
+  [dismissible]="true"
+  (dismissed)="dismissed.emit()"
+>
+  <p class="import-summary__line">
+    Imported <strong>{{ summary().importedCount }}</strong> /
+    Discarded <strong>{{ summary().discardedCount }}</strong>
+  </p>
+  @if (summary().discardedCount > 0) {
+    <ul class="import-summary__breakdown">
+      @for (item of breakdown(); track item.label) {
+        <li class="import-summary__item">
+          <app-chip [label]="item.count + ' ' + item.label"></app-chip>
+        </li>
+      }
+    </ul>
+  }
+</app-alert>
