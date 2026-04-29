@@ -1,0 +1,43 @@
+<app-toolbar title="POI Editor"></app-toolbar>
+
+<app-actions-bar
+  [addModeEnabled]="addModeEnabled()"
+  [snapEnabled]="snapEnabled()"
+  (importRequested)="onImport($event)"
+  (exportRequested)="onExport()"
+  (saveRequested)="onSave()"
+  (clearRequested)="onClear()"
+  (addModeToggled)="toggleAddMode()"
+  (snapToggled)="toggleSnap()"
+></app-actions-bar>
+
+@if (importSummary(); as summary) {
+  <div class="app-shell__summary">
+    <app-import-summary [summary]="summary" (dismissed)="dismissSummary()"></app-import-summary>
+  </div>
+}
+
+<main class="app-shell__main" id="main-content">
+  <section class="app-shell__map" aria-label="Map">
+    <app-map
+      [collection]="filteredCollection()"
+      [addModeEnabled]="addModeEnabled()"
+      (mapClicked)="onMapClicked($event)"
+      (featureClicked)="onFeatureClicked($event)"
+    ></app-map>
+  </section>
+  <aside class="app-shell__sidebar" aria-label="Points sidebar">
+    <app-poi-filter
+      [query]="searchQuery()"
+      [category]="categoryFilter()"
+      [categories]="categories()"
+      (queryChanged)="onSearchChanged($event)"
+      (categoryChanged)="onCategoryFilterChanged($event)"
+    ></app-poi-filter>
+    <app-poi-list
+      [features]="filteredFeatures()"
+      (editRequested)="onFeatureClicked($event)"
+      (deleteRequested)="onDeleteRequested($event)"
+    ></app-poi-list>
+  </aside>
+</main>
