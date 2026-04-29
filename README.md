@@ -41,10 +41,13 @@ Los datos de ejemplo se sirven desde `public/`:
 
 ### Extras (bonus del desafío)
 - **Búsqueda y filtrado** — búsqueda textual sobre `name`/`category` más filtro por categoría con chips.
-- **Clustering** — clustering nativo de MapLibre con burbujas y conteo; al hacer clic sobre un cluster, el mapa hace zoom.
+- **Clustering** — clustering nativo de MapLibre con burbujas y conteo; al hacer clic sobre un cluster, el mapa hace zoom usando `getClusterExpansionZoom`.
 - **Snapping** — toggle para alinear los nuevos puntos a una grilla de 0.0001°.
 - **Accesibilidad básica** — `role`/`aria-label` en toolbar, búsqueda, sidebar y mapa; `aria-pressed` en los botones toggle; foco visible; los diálogos de Material atrapan y restauran el foco.
 - **Tests unitarios** — specs Vitest para validadores (`latitude`, `longitude`, `coordinates`, `feature`), helpers (`poi-filter-matcher`, `coordinates-snapper`) y el store `PoiStoreService`.
+- **Vocabulario controlado** — `category` usa un tipo `PoiCategory` derivado de `POI_CATEGORIES as const`; el diálogo expone un `AppSelectComponent<PoiCategory>` con opciones tipadas generadas por `PoiCategoryOptionsFactory`.
+- **Drag-to-move** — `MapDragBinder` captura `mousedown` sobre la capa de POIs, rastrea `mousemove` y emite un `MapDragEvent` en `mouseup` si el puntero se desplazó; `app.ts` delega a `PoiStoreService.move()`. El `dragPan` del mapa se desactiva durante el arrastre para evitar conflictos.
+- **i18n (Angular Localize)** — infraestructura activa con `@angular/localize/init` como polyfill. Los textos de la UI están marcados con atributos `i18n` / `i18n-*`. Mensajes fuente en `src/locale/messages.xlf`; traducción al español en `src/locale/messages.es.xlf`. Para servir en español: `ng serve --configuration=es`.
 
 ## Arquitectura
 
@@ -144,11 +147,10 @@ El resumen visible para el usuario muestra los conteos durante la importación (
 
 ## Limitaciones y posibles mejoras
 
-- La edición conserva `category` como vocabulario controlado (`POI_CATEGORIES` + tipo `PoiCategory`); el select usa `AppSelectComponent<PoiCategory>` con opciones tipadas.
-- **Drag-to-move implementado:** `MapDragBinder` captura `mousedown` en la capa de POIs, rastrea `mousemove` y emite un `MapDragEvent` en `mouseup` si el puntero se movió; `app.ts` delega a `PoiStoreService.move()`. El `dragPan` del mapa se desactiva durante el arrastre para evitar conflictos.
-- No hay tests E2E; el proyecto incluye sólo tests unitarios.
-- **i18n implementado:** la infraestructura de Angular Localize está activa (`@angular/localize/init` como polyfill). Los textos de la UI están marcados con atributos `i18n` / `i18n-*`. El archivo de mensajes fuente se encuentra en `src/locale/messages.xlf` y la traducción al español en `src/locale/messages.es.xlf`. Para servir en español: `ng serve --configuration=es`.
-- El rendimiento se verificó manualmente con el dataset de ejemplo; para colecciones grandes el pipeline de import (`GeoJsonImporterService`) podría moverse a un Web Worker.
+- No hay tests E2E; el proyecto incluye sólo tests unitarios con Vitest.
+- El rendimiento se verificó manualmente con el dataset de ejemplo; para colecciones grandes el pipeline de importación (`GeoJsonImporterService`) podría moverse a un Web Worker.
+- Los textos de la UI están extraídos y la traducción al español está incluida, pero no hay traducción de los mensajes de diálogo generados programáticamente (confirmación de borrado, etc.).
+- El drag-to-move no funciona en dispositivos táctiles; requeriría manejar los eventos `touchstart` / `touchmove` / `touchend` en `MapDragBinder`.
 
 ## Cómo escalar más allá de puntos
 
