@@ -1,88 +1,88 @@
 # POI Editor
 
-Editor of points of interest (POIs) on top of a MapLibre map, built with Angular 21 standalone components and Angular Material. The app imports a GeoJSON `FeatureCollection` of points, lets the user add / edit / delete points, persists state in `localStorage`, and exports the result as a `.geojson` file.
+Editor de puntos de interés (POIs) sobre un mapa MapLibre, construido con Angular 21 (componentes standalone) y Angular Material. La aplicación importa un `FeatureCollection` GeoJSON de puntos, permite agregar / editar / eliminar puntos, persiste el estado en `localStorage` y exporta el resultado como un archivo `.geojson`.
 
-This project answers the technical challenge in [docs/Desafíos Técnicos.pdf](docs/Desaf%C3%ADos%20T%C3%A9cnicos.pdf).
+Este proyecto resuelve el desafío técnico descrito en [docs/Desafíos Técnicos.pdf](docs/Desaf%C3%ADos%20T%C3%A9cnicos.pdf).
 
-## Requirements
+## Requisitos
 
-- Node.js 20.x or 22.x (LTS)
-- npm 10+ (project pinned to `npm@11.11.0` via `packageManager`)
-- Angular CLI 21 (installed locally via the `@angular/cli` dev dependency — use `npx ng ...`)
+- Node.js 20.x o 22.x (LTS)
+- npm 10+ (el proyecto fija `npm@11.11.0` mediante `packageManager`)
+- Angular CLI 21 (instalado localmente vía la dependencia `@angular/cli`; usar `npx ng ...`)
 
-## Install, run, build, test
+## Instalar, ejecutar, compilar y testear
 
 ```bash
 npm install
 npx ng serve              # http://localhost:4200
-npx ng build              # production build (dist/poi-editor)
+npx ng build              # build de producción (dist/poi-editor)
 npx ng build --configuration=development
-npx ng test --watch=false # Vitest unit tests
+npx ng test --watch=false # tests unitarios con Vitest
 ```
 
-Sample data is served from the `public/` folder:
-- `public/pois.sample.geojson` — valid points around Santiago
-- `public/pois.invalid.geojson` — mixed valid / invalid features to exercise the discard summary
+Los datos de ejemplo se sirven desde `public/`:
+- `public/pois.sample.geojson` — puntos válidos alrededor de Santiago.
+- `public/pois.invalid.geojson` — mezcla de features válidas e inválidas para ejercitar el resumen de descarte.
 
-## Features
+## Funcionalidades
 
-### Required (MVP)
-- MapLibre base map with OSM raster tiles and visible attribution.
-- Import a GeoJSON `FeatureCollection` of `Point` features from a local file.
-- Render imported points on the map and in a side list.
-- Add a new point by clicking on the map (toggleable "Add" mode).
-- Edit `name` and `category` of any point through a dialog.
-- Delete a point with a confirmation dialog.
-- Persist the current `FeatureCollection` to `localStorage` under key `poi_editor_state`.
-- Auto‑restore the saved state on app start.
-- Export the current state as a downloadable `.geojson` file.
-- Clear the local state (removes the `localStorage` key and resets the app).
-- Robust input handling: invalid features are discarded; a summary card shows how many were imported / discarded and the breakdown of reasons.
+### Obligatorias (MVP)
+- Mapa base MapLibre con tiles raster de OSM y atribución visible.
+- Importar un `FeatureCollection` GeoJSON de features `Point` desde un archivo local.
+- Renderizar los puntos importados en el mapa y en una lista lateral.
+- Agregar un nuevo punto haciendo clic en el mapa (modo "Add" toggleable).
+- Editar `name` y `category` de cualquier punto mediante un diálogo.
+- Eliminar un punto con un diálogo de confirmación.
+- Persistir el `FeatureCollection` actual en `localStorage` bajo la clave `poi_editor_state`.
+- Auto‑restore del estado guardado al iniciar la app.
+- Exportar el estado actual como un archivo `.geojson` descargable.
+- Limpiar el estado local (elimina la clave de `localStorage` y reinicia la app).
+- Tolerancia a entradas inválidas: las features no válidas se descartan; un resumen indica cuántas se importaron / descartaron y el motivo de cada descarte.
 
-### Extras (challenge bonus)
-- **Search & filter** — text search across `name`/`category` plus per-category chip filter.
-- **Clustering** — MapLibre native clustering with cluster bubbles and counts; clicking a cluster zooms in.
-- **Snapping** — toggleable snap to a 0.0001° grid when adding new points.
-- **A11y basics** — `role`/`aria-label` on toolbar, search, sidebar and map; `aria-pressed` on toggle buttons; visible focus rings; Material dialogs trap focus and restore it on close.
-- **Unit tests** — Vitest specs for validators (`latitude`, `longitude`, `coordinates`, `feature`), helpers (`poi-filter-matcher`, `coordinates-snapper`) and the `PoiStoreService` store.
+### Extras (bonus del desafío)
+- **Búsqueda y filtrado** — búsqueda textual sobre `name`/`category` más filtro por categoría con chips.
+- **Clustering** — clustering nativo de MapLibre con burbujas y conteo; al hacer clic sobre un cluster, el mapa hace zoom.
+- **Snapping** — toggle para alinear los nuevos puntos a una grilla de 0.0001°.
+- **Accesibilidad básica** — `role`/`aria-label` en toolbar, búsqueda, sidebar y mapa; `aria-pressed` en los botones toggle; foco visible; los diálogos de Material atrapan y restauran el foco.
+- **Tests unitarios** — specs Vitest para validadores (`latitude`, `longitude`, `coordinates`, `feature`), helpers (`poi-filter-matcher`, `coordinates-snapper`) y el store `PoiStoreService`.
 
-## Architecture
+## Arquitectura
 
-The codebase enforces strict separation of concerns and a "one export per file" rule.
+El código aplica una separación estricta de responsabilidades y la regla "un solo export por archivo".
 
 ```
 src/app/
-├── core/                # framework-agnostic domain layer
-│   ├── constants/       # immutable values (layer ids, ranges, defaults, snap step…)
+├── core/                # capa de dominio, agnóstica al framework
+│   ├── constants/       # valores inmutables (ids de capas, rangos, defaults, paso de snap…)
 │   ├── enums/           # GeoJsonType, DiscardReason, StorageKey
-│   ├── helpers/         # pure helpers (factories, validators-by-composition, snapper, filter matcher…)
+│   ├── helpers/         # helpers puros (factories, validadores por composición, snapper, filtro…)
 │   ├── interfaces/      # PoiFeature, PoiFeatureCollection, ImportSummary, PoiFilter…
 │   ├── tokens/          # injection tokens (StorageDriver)
-│   ├── types/           # branded primitive types (Latitude, Longitude, Coordinates, FeatureId)
-│   └── validators/      # one validator class per concern (composed via constructor)
-├── services/            # Angular @Injectable services
+│   ├── types/           # tipos primitivos branded (Latitude, Longitude, Coordinates, FeatureId)
+│   └── validators/      # una clase de validador por concern (compuestas vía constructor)
+├── services/            # servicios Angular @Injectable
 │   ├── geojson-importer.service.ts
 │   ├── geojson-exporter.service.ts
 │   ├── import-summary.service.ts
 │   ├── local-storage-driver.service.ts
 │   ├── map-style-provider.service.ts
 │   ├── persistence.service.ts
-│   └── poi-store.service.ts        # signals-based reactive store
-├── ui/                  # Angular Material wrappers (single styling layer)
+│   └── poi-store.service.ts        # store reactivo basado en signals
+├── ui/                  # wrappers sobre Angular Material (capa única de estilo)
 │   ├── button, icon-button, text-field, chip, card, alert,
 │   ├── empty-state, file-picker, confirm-dialog, dialog-shell,
 │   ├── toolbar, icon
 │   └── services/        # DialogService, NotificationService, ConfirmDestructiveService
-└── components/          # feature components — only consume ui/* (never Material directly)
+└── components/          # componentes feature — sólo consumen ui/* (nunca Material directo)
     ├── actions-bar/
     ├── import-summary/
-    ├── map/             # MapComponent + helpers/ for every private concern
+    ├── map/             # MapComponent + helpers/ por cada concern privado
     ├── poi-editor/      # PoiEditorComponent + PoiCreationDialogService
     ├── poi-filter/
     └── poi-list/
 ```
 
-### Layered dependencies
+### Dependencias por capa
 
 ```
 components ──▶ ui ──▶ Angular Material
@@ -92,67 +92,73 @@ components ──▶ ui ──▶ Angular Material
                 └──────────┘
 ```
 
-- `core/` has zero Angular runtime dependencies (only types/decorators-free helpers); imported everywhere.
-- `services/` are the only place that holds runtime state (`PoiStoreService` uses signals).
-- `ui/` is the only layer allowed to import from `@angular/material`. Feature components import `ui/*` instead.
-- `components/` orchestrate; their private logic is extracted into per-concern helper / service files.
+- `core/` no tiene dependencias de runtime de Angular (sólo tipos / helpers); puede importarse desde cualquier parte.
+- `services/` es la única capa con estado de runtime (`PoiStoreService` usa signals).
+- `ui/` es la única capa autorizada a importar `@angular/material`. Los componentes feature consumen `ui/*` en su lugar.
+- `components/` orquestan; toda lógica privada relevante se extrae a archivos helper / service por concern.
 
-### Single-Responsibility & "one export per file"
-Every file under `core/`, `ui/`, `components/*/helpers` and the dialog services exports exactly one thing. When a method on a component held meaningful logic (e.g. cluster zoom, click-intent dispatch, deferred collection apply, dialog opening, destructive confirmation) it was extracted into a dedicated single-export file.
+### Single-Responsibility y "un export por archivo"
+Cada archivo bajo `core/`, `ui/`, `components/*/helpers` y los services de diálogo exporta exactamente una cosa. Cada vez que un método privado contenía lógica con sentido propio (por ejemplo, zoom de cluster, dispatch de intents de click, snap por valor, conteo de decimales, apertura de diálogos, confirmación destructiva) se extrajo a un archivo dedicado con un único export.
 
-### State management
-`PoiStoreService` exposes signals (`features`, `count`, computed `collection`) and the only mutating operations needed by the use cases (`setAll`, `add`, `update`, `move`, `remove`, `clear`, `findById`). Filtering is applied in the `App` component via a `PoiFilterMatcher` helper to keep the store free of UI concerns.
+### Manejo de estado
+`PoiStoreService` expone signals (`features`, `count`, computed `collection`) y sólo las operaciones de mutación que requieren los casos de uso (`setAll`, `add`, `update`, `move`, `remove`, `clear`, `findById`). El filtrado se aplica en el componente `App` usando el helper `PoiFilterMatcher` para mantener al store libre de lógica de UI.
 
-### Persistence
-`PersistenceService` depends on the `STORAGE_DRIVER` injection token. The default binding is `LocalStorageDriverService`, which implements the `StorageDriver` interface. Swapping to a different backend (IndexedDB, in-memory for tests, remote API) is a matter of providing a different token binding — no service consumer changes are needed.
+### Persistencia
+`PersistenceService` depende del injection token `STORAGE_DRIVER`. El binding por defecto es `LocalStorageDriverService`, que implementa la interfaz `StorageDriver`. Cambiar a otro backend (IndexedDB, in-memory para tests, API remota) implica únicamente proveer otro binding del token; los consumidores no cambian.
 
-### MapLibre integration
-Map render concerns live in `components/map/helpers/`:
-- `MapInitializer`, `MapStyleProviderService` — boot the map with OSM tiles and attribution.
-- `PoiLayerRegistrar` — registers a clustered GeoJSON source plus three layers (cluster circles, cluster count, individual points).
-- `MapInteractionsBinder`, `MapClickHandler`, `MapClickIntentDispatcher` — convert raw `MapMouseEvent`s into typed `MapClickIntent`s (`FeatureSelected | AddPointRequested | ClusterClicked | None`) consumed by the component.
-- `DeferredCollectionApplier` / `MapCollectionApplier` — push the latest collection into the source as soon as the map is ready.
-- `MapReleaser`, `MapDisposer` — clean teardown on destroy.
+### Integración con MapLibre
+La lógica de render del mapa vive en `components/map/helpers/`:
+- `MapInitializer`, `MapStyleProviderService` — inicializan el mapa con tiles OSM y atribución.
+- `PoiLayerRegistrar` — registra una fuente GeoJSON con cluster habilitado y tres capas (cluster circles, cluster count, puntos individuales).
+- `MapInteractionsBinder`, `MapClickHandler`, `MapClickIntentDispatcher` — convierten `MapMouseEvent`s crudos en `MapClickIntent` tipados (`FeatureSelected | AddPointRequested | ClusterClicked | None`) que el componente consume.
+- `ClusterZoomer` + `ClusterZoomStepper` — ejecutan el zoom progresivo cuando se hace clic en un cluster.
+- `DeferredCollectionApplier` / `MapCollectionApplier` — empujan la colección actual al source en cuanto el mapa está listo.
+- `MapReleaser`, `MapDisposer` — teardown limpio en el destroy.
 
-## Validation rules
+### Snapping
+`CoordinatesSnapper` compone:
+- `GridValueSnapper` — alinea un valor numérico a un paso arbitrario.
+- `StepDecimalsCounter` — calcula los decimales que mantiene el formato del paso.
 
-| Rule                                                  | Discard reason            |
-| ----------------------------------------------------- | ------------------------- |
-| Object is not a Feature / `type !== 'Feature'`        | `NotAFeature`             |
-| `geometry.type !== 'Point'`                           | `GeometryNotPoint`        |
-| Coordinates are not a `[lon, lat]` tuple              | `InvalidCoordinates`      |
-| Coordinates outside WGS84 ranges                      | `CoordinatesOutOfRange`   |
-| `properties` missing or not an object                 | `MissingProperties`       |
-| `properties.name` missing / not a string              | `InvalidName`             |
-| `properties.category` missing / not a string          | `InvalidCategory`         |
+## Reglas de validación
 
-The user-facing summary surfaces these counts on import (e.g. `Imported 28 / Discarded 3 (2 coordinates out of range, 1 missing name)`).
+| Regla                                                  | Motivo de descarte         |
+| ------------------------------------------------------ | -------------------------- |
+| El objeto no es Feature / `type !== 'Feature'`         | `NotAFeature`              |
+| `geometry.type !== 'Point'`                            | `GeometryNotPoint`         |
+| Las coordenadas no son una tupla `[lon, lat]`          | `InvalidCoordinates`       |
+| Coordenadas fuera de los rangos WGS84                  | `CoordinatesOutOfRange`    |
+| `properties` ausente o no es un objeto                 | `MissingProperties`        |
+| `properties.name` ausente / no es string               | `InvalidName`              |
+| `properties.category` ausente / no es string           | `InvalidCategory`          |
+
+El resumen visible para el usuario muestra los conteos durante la importación (por ejemplo, `Imported 28 / Discarded 3 (2 coordinates out of range, 1 missing name)`).
 
 ## Trade-offs
 
-- **No NgRx / Redux**: a signals store covers the current footprint without ceremony. If the app grew (multiple collections, undo / redo, server sync), introducing a feature-state library would pay off.
-- **Filter lives in the App component**: keeps the store pure. If the filter became cross-cutting (URL state, persistence) a dedicated `PoiFilterStore` would be the next refactor.
-- **Cluster zoom uses a fixed step**, not `getClusterExpansionZoom`: simpler, avoids the async source query, and works well at the default cluster radius.
-- **Snap grid is fixed at 0.0001°** (~11 m). Configurable through `CoordinatesSnapper`'s constructor or the `SNAP_GRID_STEP` constant.
-- **No backend**: state lives only in `localStorage`. Replacing `LocalStorageDriverService` with a remote driver bound to `STORAGE_DRIVER` is a one-line provider change.
+- **Sin NgRx / Redux**: un store basado en signals es suficiente para el alcance actual sin agregar ceremonia. Si la app creciera (múltiples colecciones, undo/redo, sync con servidor) introducir una librería de estado pagaría la cuota.
+- **El filtro vive en el componente App**: mantiene puro al store. Si el filtro se vuelve cross-cutting (estado en URL, persistencia) la siguiente refactor sería un `PoiFilterStore` dedicado.
+- **El zoom de cluster usa un paso fijo** en vez de `getClusterExpansionZoom`: más simple, evita la query asíncrona al source y rinde bien con el radio de cluster por defecto.
+- **El paso de snap es 0.0001°** (~11 m). Configurable a través del constructor de `CoordinatesSnapper` o de la constante `SNAP_GRID_STEP`.
+- **Sin backend**: el estado vive sólo en `localStorage`. Reemplazar `LocalStorageDriverService` por un driver remoto enlazado a `STORAGE_DRIVER` es un cambio de provider de una línea.
 
-## Limitations & possible improvements
+## Limitaciones y posibles mejoras
 
-- Edits keep `category` as a free-text string. A controlled vocabulary (enum or remote taxonomy) would prevent typos.
-- Cluster expansion uses a fixed zoom step instead of MapLibre's `getClusterExpansionZoom`.
-- Drag-to-move is not implemented; editing coordinates currently happens via re-add. Adding map drag handlers would be straightforward thanks to `PoiStoreService.move()`.
-- E2E coverage is missing; the project ships unit tests only.
-- Internationalisation is not configured. Strings are English-only.
-- Performance has been verified manually with the sample dataset; for large collections the import pipeline (`GeoJsonImporterService`) could be moved to a Web Worker.
+- La edición conserva `category` como texto libre. Un vocabulario controlado (enum o taxonomía remota) prevendría typos.
+- La expansión de clusters usa un paso fijo en vez de `getClusterExpansionZoom`.
+- No se implementó drag-to-move; la edición de coordenadas se realiza vía re-add. Agregar handlers de drag sería directo gracias a `PoiStoreService.move()`.
+- No hay tests E2E; el proyecto incluye sólo tests unitarios.
+- No hay i18n configurado. Los textos están sólo en inglés en la UI.
+- El rendimiento se verificó manualmente con el dataset de ejemplo; para colecciones grandes el pipeline de import (`GeoJsonImporterService`) podría moverse a un Web Worker.
 
-## Scaling beyond points
+## Cómo escalar más allá de puntos
 
-For LineStrings / Polygons the architecture would extend cleanly:
-- Add new geometry validators alongside `point-geometry.validator.ts`.
-- Introduce per-geometry `PoiFeatureFactory` variants (or a discriminated factory).
-- Add dedicated MapLibre layers (`line` / `fill`) registered by `PoiLayerRegistrar`.
-- The store, persistence, importer / exporter and filter helpers are geometry-agnostic and need no changes beyond widening the `PoiGeometry` type.
+Para LineStrings / Polygons la arquitectura escala limpiamente:
+- Agregar nuevos validadores de geometría junto a `point-geometry.validator.ts`.
+- Introducir variantes de `PoiFeatureFactory` por geometría (o una factory discriminada).
+- Registrar capas MapLibre dedicadas (`line` / `fill`) desde `PoiLayerRegistrar`.
+- El store, la persistencia, el importador / exportador y los helpers de filtro son geometry-agnostic y no requieren cambios más allá de ampliar el tipo `PoiGeometry`.
 
-## Time spent
+## Tiempo invertido
 
-Approximately 6 hours of effective work, including the bonus features (clustering, search, snapping, a11y, unit tests).
+Aproximadamente 6 horas efectivas, incluyendo los extras (clustering, búsqueda, snapping, a11y, tests unitarios).

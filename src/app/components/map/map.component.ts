@@ -11,13 +11,13 @@ import {
   viewChild,
 } from '@angular/core';
 import type { Map as MapLibreMap } from 'maplibre-gl';
-import { ClusterZoomStepper } from '../../core/helpers/cluster-zoom-stepper.helper';
 import { MAP_DEFAULT_CENTER } from '../../core/constants/map-default-center.const';
 import { MAP_DEFAULT_ZOOM } from '../../core/constants/map-default-zoom.const';
 import { Coordinates } from '../../core/types/coordinates.type';
 import { FeatureId } from '../../core/types/feature-id.type';
 import { PoiFeatureCollection } from '../../core/interfaces/poi-feature-collection.interface';
 import { MapStyleProviderService } from '../../services/map-style-provider.service';
+import { ClusterZoomer } from './helpers/cluster-zoomer.helper';
 import { DeferredCollectionApplier } from './helpers/deferred-collection-applier.helper';
 import { MapClickHandler } from './helpers/map-click-handler.helper';
 import { MapClickIntentDispatcher } from './helpers/map-click-intent-dispatcher.helper';
@@ -46,7 +46,7 @@ export class MapComponent implements AfterViewInit {
   private readonly clickDispatcher = new MapClickIntentDispatcher();
   private readonly deferredApplier = new DeferredCollectionApplier();
   private readonly releaser = new MapReleaser();
-  private readonly clusterZoomStepper = new ClusterZoomStepper();
+  private readonly clusterZoomer = new ClusterZoomer();
 
   readonly collection = input.required<PoiFeatureCollection>();
   readonly addModeEnabled = input<boolean>(false);
@@ -87,17 +87,10 @@ export class MapComponent implements AfterViewInit {
           intent,
           (id) => this.featureClicked.emit(id),
           (coordinates) => this.mapClicked.emit(coordinates),
-          (coordinates) => this.zoomToCluster(map, coordinates)
+          (coordinates) => this.clusterZoomer.zoomTo(map, coordinates)
         );
       });
       this.readyResolver?.();
-    });
-  }
-
-  private zoomToCluster(map: MapLibreMap, coordinates: Coordinates): void {
-    map.easeTo({
-      center: [coordinates[0], coordinates[1]],
-      zoom: this.clusterZoomStepper.next(map.getZoom()),
     });
   }
 }
