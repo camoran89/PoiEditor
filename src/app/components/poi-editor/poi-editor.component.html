@@ -1,0 +1,26 @@
+<app-dialog-shell [title]="title">
+  <div class="poi-editor__fields">
+    <app-text-field
+      label="Name"
+      [value]="name()"
+      [required]="true"
+      [fullWidth]="true"
+      (valueChanged)="name.set($event)"
+    ></app-text-field>
+    <app-text-field
+      label="Category"
+      [value]="category()"
+      [required]="true"
+      [fullWidth]="true"
+      (valueChanged)="category.set($event)"
+    ></app-text-field>
+    <p class="poi-editor__coords">{{ data.coordinates | coordinates }}</p>
+  </div>
+
+  <ng-container appDialogActions>
+    <app-button (clicked)="onCancel()">Cancel</app-button>
+    <app-button [variant]="primaryVariant" [disabled]="!canSubmit()" (clicked)="onSubmit()">
+      Save
+    </app-button>
+  </ng-container>
+</app-dialog-shell>

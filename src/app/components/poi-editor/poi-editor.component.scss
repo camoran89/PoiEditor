@@ -1,0 +1,12 @@
+.poi-editor__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.poi-editor__coords {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--mat-sys-on-surface-variant, #777);
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+}
