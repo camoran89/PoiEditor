@@ -7,13 +7,15 @@
       [fullWidth]="true"
       (valueChanged)="name.set($event)"
     ></app-text-field>
-    <app-text-field
+    <app-select
       label="Category"
       [value]="category()"
+      [options]="categoryOptions"
       [required]="true"
       [fullWidth]="true"
+      placeholder="Select a category…"
       (valueChanged)="category.set($event)"
-    ></app-text-field>
+    ></app-select>
     <p class="poi-editor__coords">{{ data.coordinates | coordinates }}</p>
   </div>
 
