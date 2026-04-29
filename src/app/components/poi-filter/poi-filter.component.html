@@ -1,0 +1,23 @@
+<div class="poi-filter" role="search" aria-label="Filter points of interest">
+  <app-text-field
+    label="Search by name or category"
+    [value]="query()"
+    [fullWidth]="true"
+    (valueChanged)="queryChanged.emit($event)"
+  ></app-text-field>
+  @if (categories().length > 0) {
+    <div class="poi-filter__categories" role="group" aria-label="Filter by category">
+      @for (option of categoriesWithAll(); track option) {
+        <button
+          type="button"
+          class="poi-filter__chip"
+          [class.poi-filter__chip--active]="isSelected(option)"
+          [attr.aria-pressed]="isSelected(option)"
+          (click)="onCategoryClicked(option)"
+        >
+          <app-chip [label]="labelFor(option)"></app-chip>
+        </button>
+      }
+    </div>
+  }
+</div>

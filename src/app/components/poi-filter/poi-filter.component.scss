@@ -1,0 +1,30 @@
+.poi-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0 1rem 0.5rem;
+}
+
+.poi-filter__categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.poi-filter__chip {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 999px;
+  outline-offset: 2px;
+
+  &:focus-visible {
+    outline: 2px solid #1976d2;
+  }
+}
+
+.poi-filter__chip--active app-chip {
+  filter: brightness(0.85);
+  font-weight: 600;
+}
