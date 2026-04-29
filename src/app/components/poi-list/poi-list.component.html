@@ -5,7 +5,7 @@
   @if (features().length === 0) {
     <app-empty-state
       icon="place"
-      message="No points yet. Import a GeoJSON file or click 'Add point'."
+      message="No points yet. Import a GeoJSON file or click 'Add point'." i18n-message="@@poiList.emptyMessage"
     ></app-empty-state>
   } @else {
     <ul class="poi-list__items">
@@ -21,12 +21,12 @@
           <div class="poi-item__actions">
             <app-icon-button
               icon="edit"
-              ariaLabel="Edit point"
+              ariaLabel="Edit point" i18n-ariaLabel="@@poiList.editAriaLabel"
               (clicked)="editRequested.emit(feature.id)"
             ></app-icon-button>
             <app-icon-button
               icon="delete"
-              ariaLabel="Delete point"
+              ariaLabel="Delete point" i18n-ariaLabel="@@poiList.deleteAriaLabel"
               (clicked)="deleteRequested.emit(feature.id)"
             ></app-icon-button>
           </div>

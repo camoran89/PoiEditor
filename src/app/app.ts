@@ -11,6 +11,7 @@ import { PoiUpdateInput } from './core/interfaces/poi-update-input.interface';
 import { ActionsBarComponent } from './components/actions-bar/actions-bar.component';
 import { ImportSummaryComponent } from './components/import-summary/import-summary.component';
 import { MapComponent } from './components/map/map.component';
+import { MapDragEvent } from './components/map/helpers/map-drag-event.interface';
 import { PoiCreationDialogService } from './components/poi-editor/poi-creation-dialog.service';
 import { PoiEditorComponent } from './components/poi-editor/poi-editor.component';
 import { PoiEditorDialogData } from './components/poi-editor/poi-editor-dialog-data.interface';
@@ -191,5 +192,9 @@ export class App implements OnInit {
     if (confirmed) {
       this.store.remove(id);
     }
+  }
+
+  protected onFeatureMoved(event: MapDragEvent): void {
+    this.store.move(event.featureId, event.coordinates);
   }
 }

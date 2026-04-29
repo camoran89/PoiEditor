@@ -1,6 +1,6 @@
-<div class="poi-filter" role="search" aria-label="Filter points of interest">
+<div class="poi-filter" role="search" aria-label="Filter points of interest" i18n-aria-label="@@poiFilter.ariaLabel">
   <app-text-field
-    label="Search by name or category"
+    label="Search by name or category" i18n-label="@@poiFilter.searchLabel"
     [value]="query()"
     [fullWidth]="true"
     (valueChanged)="queryChanged.emit($event)"

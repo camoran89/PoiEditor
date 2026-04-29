@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="actionsBar.ariaLabel" datatype="html">
+        <source>Editor actions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/actions-bar/actions-bar.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="actionsBar.importLabel" datatype="html">
+        <source>Import GeoJSON</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/actions-bar/actions-bar.component.html</context>
+          <context context-type="linenumber">6,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="actionsBar.exportLabel" datatype="html">
+        <source>Export</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/actions-bar/actions-bar.component.html</context>
+          <context context-type="linenumber">10,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="actionsBar.saveLabel" datatype="html">
+        <source>Save</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/actions-bar/actions-bar.component.html</context>
+          <context context-type="linenumber">14,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="actionsBar.cancelAdd" datatype="html">
+        <source>Cancel add</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/actions-bar/actions-bar.component.html</context>
+          <context context-type="linenumber">23,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="actionsBar.addPoint" datatype="html">
+        <source>Add point</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/actions-bar/actions-bar.component.html</context>
+          <context context-type="linenumber">25,27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="actionsBar.snapOn" datatype="html">
+        <source>Snap: on</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/actions-bar/actions-bar.component.html</context>
+          <context context-type="linenumber">35,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="actionsBar.snapOff" datatype="html">
+        <source>Snap: off</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/actions-bar/actions-bar.component.html</context>
+          <context context-type="linenumber">37,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="actionsBar.clearLabel" datatype="html">
+        <source>Clear</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/actions-bar/actions-bar.component.html</context>
+          <context context-type="linenumber">42,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="poiEditor.nameLabel" datatype="html">
+        <source>Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/poi-editor/poi-editor.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="poiEditor.categoryLabel" datatype="html">
+        <source>Category</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/poi-editor/poi-editor.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="poiEditor.cancelButton" datatype="html">
+        <source>Cancel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/poi-editor/poi-editor.component.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="poiEditor.saveButton" datatype="html">
+        <source>Save</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/poi-editor/poi-editor.component.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="poiFilter.ariaLabel" datatype="html">
+        <source>Filter points of interest</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/poi-filter/poi-filter.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="poiFilter.searchLabel" datatype="html">
+        <source>Search by name or category</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/poi-filter/poi-filter.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="poiList.emptyMessage" datatype="html">
+        <source>No points yet. Import a GeoJSON file or click &apos;Add point&apos;.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/poi-list/poi-list.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="poiList.editAriaLabel" datatype="html">
+        <source>Edit point</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/poi-list/poi-list.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="poiList.deleteAriaLabel" datatype="html">
+        <source>Delete point</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/poi-list/poi-list.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

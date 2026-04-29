@@ -19,6 +19,8 @@ import { PoiFeatureCollection } from '../../core/interfaces/poi-feature-collecti
 import { MapStyleProviderService } from '../../services/map-style-provider.service';
 import { ClusterZoomer } from './helpers/cluster-zoomer.helper';
 import { DeferredCollectionApplier } from './helpers/deferred-collection-applier.helper';
+import { MapDragBinder } from './helpers/map-drag-binder.helper';
+import { MapDragEvent } from './helpers/map-drag-event.interface';
 import { MapClickHandler } from './helpers/map-click-handler.helper';
 import { MapClickIntentDispatcher } from './helpers/map-click-intent-dispatcher.helper';
 import { MapInitializer } from './helpers/map-initializer.helper';
@@ -47,12 +49,14 @@ export class MapComponent implements AfterViewInit {
   private readonly deferredApplier = new DeferredCollectionApplier();
   private readonly releaser = new MapReleaser();
   private readonly clusterZoomer = new ClusterZoomer();
+  private readonly dragBinder = new MapDragBinder();
 
   readonly collection = input.required<PoiFeatureCollection>();
   readonly addModeEnabled = input<boolean>(false);
 
   readonly mapClicked = output<Coordinates>();
   readonly featureClicked = output<FeatureId>();
+  readonly featureMoved = output<MapDragEvent>();
 
   private map: MapLibreMap | null = null;
   private readyResolver?: () => void;
@@ -81,6 +85,7 @@ export class MapComponent implements AfterViewInit {
     this.map = map;
     map.on('load', () => {
       this.poiLayerRegistrar.register(map);
+      this.dragBinder.bind(map, (event) => this.featureMoved.emit(event));
       this.interactionsBinder.bind(map, (event) => {
         const intent = this.clickHandler.handle(map, event, this.addModeEnabled());
         this.clickDispatcher.dispatch(

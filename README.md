@@ -144,10 +144,12 @@ El resumen visible para el usuario muestra los conteos durante la importación (
 
 ## Limitaciones y posibles mejoras
 
-- La edición conserva `category` como texto libre. Un vocabulario controlado (enum o taxonomía remota) prevendría typos.
-- No se implementó drag-to-move; la edición de coordenadas se realiza vía re-add. Agregar handlers de drag sería directo gracias a `PoiStoreService.move()`.
+## Limitaciones y posibles mejoras
+
+- La edición conserva `category` como vocabulario controlado (`POI_CATEGORIES` + tipo `PoiCategory`); el select usa `AppSelectComponent<PoiCategory>` con opciones tipadas.
+- **Drag-to-move implementado:** `MapDragBinder` captura `mousedown` en la capa de POIs, rastrea `mousemove` y emite un `MapDragEvent` en `mouseup` si el puntero se movió; `app.ts` delega a `PoiStoreService.move()`. El `dragPan` del mapa se desactiva durante el arrastre para evitar conflictos.
 - No hay tests E2E; el proyecto incluye sólo tests unitarios.
-- No hay i18n configurado. Los textos están sólo en inglés en la UI.
+- **i18n implementado:** la infraestructura de Angular Localize está activa (`@angular/localize/init` como polyfill). Los textos de la UI están marcados con atributos `i18n` / `i18n-*`. El archivo de mensajes fuente se encuentra en `src/locale/messages.xlf` y la traducción al español en `src/locale/messages.es.xlf`. Para servir en español: `ng serve --configuration=es`.
 - El rendimiento se verificó manualmente con el dataset de ejemplo; para colecciones grandes el pipeline de import (`GeoJsonImporterService`) podría moverse a un Web Worker.
 
 ## Cómo escalar más allá de puntos

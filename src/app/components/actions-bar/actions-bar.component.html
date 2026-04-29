@@ -1,17 +1,17 @@
-<section class="actions-bar" role="toolbar" aria-label="Editor actions">
+<section class="actions-bar" role="toolbar" aria-label="Editor actions" i18n-aria-label="@@actionsBar.ariaLabel">
   <app-file-picker
     accept=".geojson,application/geo+json,application/json"
     (fileSelected)="importRequested.emit($event)"
   >
-    Import GeoJSON
+    <ng-container i18n="@@actionsBar.importLabel">Import GeoJSON</ng-container>
   </app-file-picker>
 
   <app-button [variant]="secondaryVariant" (clicked)="exportRequested.emit()">
-    Export
+    <ng-container i18n="@@actionsBar.exportLabel">Export</ng-container>
   </app-button>
 
   <app-button [variant]="secondaryVariant" (clicked)="saveRequested.emit()">
-    Save
+    <ng-container i18n="@@actionsBar.saveLabel">Save</ng-container>
   </app-button>
 
   <app-button
@@ -19,7 +19,11 @@
     [ariaPressed]="addModeEnabled()"
     (clicked)="addModeToggled.emit()"
   >
-    {{ addModeEnabled() ? 'Cancel add' : 'Add point' }}
+    @if (addModeEnabled()) {
+      <ng-container i18n="@@actionsBar.cancelAdd">Cancel add</ng-container>
+    } @else {
+      <ng-container i18n="@@actionsBar.addPoint">Add point</ng-container>
+    }
   </app-button>
 
   <app-button
@@ -27,10 +31,14 @@
     [ariaPressed]="snapEnabled()"
     (clicked)="snapToggled.emit()"
   >
-    {{ snapEnabled() ? 'Snap: on' : 'Snap: off' }}
+    @if (snapEnabled()) {
+      <ng-container i18n="@@actionsBar.snapOn">Snap: on</ng-container>
+    } @else {
+      <ng-container i18n="@@actionsBar.snapOff">Snap: off</ng-container>
+    }
   </app-button>
 
   <app-button [variant]="dangerVariant" (clicked)="clearRequested.emit()">
-    Clear
+    <ng-container i18n="@@actionsBar.clearLabel">Clear</ng-container>
   </app-button>
 </section>

@@ -1,14 +1,14 @@
 <app-dialog-shell [title]="title">
   <div class="poi-editor__fields">
     <app-text-field
-      label="Name"
+      label="Name" i18n-label="@@poiEditor.nameLabel"
       [value]="name()"
       [required]="true"
       [fullWidth]="true"
       (valueChanged)="name.set($event)"
     ></app-text-field>
     <app-select
-      label="Category"
+      label="Category" i18n-label="@@poiEditor.categoryLabel"
       [value]="category()"
       [options]="categoryOptions"
       [required]="true"
@@ -20,9 +20,9 @@
   </div>
 
   <ng-container appDialogActions>
-    <app-button (clicked)="onCancel()">Cancel</app-button>
+    <app-button (clicked)="onCancel()"><ng-container i18n="@@poiEditor.cancelButton">Cancel</ng-container></app-button>
     <app-button [variant]="primaryVariant" [disabled]="!canSubmit()" (clicked)="onSubmit()">
-      Save
+      <ng-container i18n="@@poiEditor.saveButton">Save</ng-container>
     </app-button>
   </ng-container>
 </app-dialog-shell>
