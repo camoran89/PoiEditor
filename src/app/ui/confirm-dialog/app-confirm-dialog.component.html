@@ -1,0 +1,11 @@
+<app-dialog-shell [title]="data.title">
+  <p class="app-confirm-dialog__message">{{ data.message }}</p>
+  <ng-container appDialogActions>
+    <app-button (clicked)="onCancel()">
+      {{ data.cancelLabel ?? 'Cancel' }}
+    </app-button>
+    <app-button [variant]="confirmVariant" (clicked)="onConfirm()">
+      {{ data.confirmLabel ?? 'Confirm' }}
+    </app-button>
+  </ng-container>
+</app-dialog-shell>

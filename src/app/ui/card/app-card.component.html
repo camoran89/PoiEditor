@@ -1,0 +1,21 @@
+<mat-card [appearance]="materialAppearance()" class="app-card">
+  @if (title(); as titleText) {
+    <mat-card-header class="app-card__header">
+      <mat-card-title>{{ titleText }}</mat-card-title>
+      @if (subtitle(); as subtitleText) {
+        <mat-card-subtitle>{{ subtitleText }}</mat-card-subtitle>
+      }
+      <div class="app-card__header-actions">
+        <ng-content select="[appCardHeaderActions]"></ng-content>
+      </div>
+    </mat-card-header>
+  }
+  <mat-card-content class="app-card__content">
+    <ng-content></ng-content>
+  </mat-card-content>
+  @if (hasFooter()) {
+    <mat-card-actions class="app-card__actions">
+      <ng-content select="[appCardActions]"></ng-content>
+    </mat-card-actions>
+  }
+</mat-card>

@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+.app-dialog-shell__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-width: 320px;
+}
+
+.app-dialog-shell__actions {
+  gap: 0.5rem;
+}

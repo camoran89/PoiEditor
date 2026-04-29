@@ -1,0 +1,24 @@
+:host {
+  display: block;
+}
+
+.app-card {
+  height: 100%;
+}
+
+.app-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-card__header-actions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.app-card__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}

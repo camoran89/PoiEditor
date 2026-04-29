@@ -1,0 +1,52 @@
+@switch (variant()) {
+  @case ('primary') {
+    <button
+      mat-flat-button
+      color="primary"
+      [type]="type()"
+      [disabled]="disabled()"
+      [attr.aria-pressed]="ariaPressed()"
+      (click)="clicked.emit($event)"
+    >
+      <ng-container [ngTemplateOutlet]="content"></ng-container>
+    </button>
+  }
+  @case ('danger') {
+    <button
+      mat-flat-button
+      color="warn"
+      [type]="type()"
+      [disabled]="disabled()"
+      [attr.aria-pressed]="ariaPressed()"
+      (click)="clicked.emit($event)"
+    >
+      <ng-container [ngTemplateOutlet]="content"></ng-container>
+    </button>
+  }
+  @case ('secondary') {
+    <button
+      mat-stroked-button
+      [type]="type()"
+      [disabled]="disabled()"
+      [attr.aria-pressed]="ariaPressed()"
+      (click)="clicked.emit($event)"
+    >
+      <ng-container [ngTemplateOutlet]="content"></ng-container>
+    </button>
+  }
+  @default {
+    <button
+      mat-button
+      [type]="type()"
+      [disabled]="disabled()"
+      [attr.aria-pressed]="ariaPressed()"
+      (click)="clicked.emit($event)"
+    >
+      <ng-container [ngTemplateOutlet]="content"></ng-container>
+    </button>
+  }
+}
+
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>

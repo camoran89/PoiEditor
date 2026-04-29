@@ -1,0 +1,15 @@
+<mat-form-field appearance="outline" class="app-text-field" [class.app-text-field--full]="fullWidth()">
+  <mat-label>{{ label() }}</mat-label>
+  <input
+    matInput
+    [type]="type()"
+    [value]="value()"
+    [required]="required()"
+    [disabled]="disabled()"
+    (input)="onInput($event)"
+    (blur)="blurred.emit()"
+  />
+  @if (hint(); as hintText) {
+    <mat-hint>{{ hintText }}</mat-hint>
+  }
+</mat-form-field>

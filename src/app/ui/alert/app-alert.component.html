@@ -1,0 +1,19 @@
+<div class="app-alert" [class]="severityClass()" role="status">
+  <app-icon class="app-alert__icon" [name]="iconName()"></app-icon>
+  <div class="app-alert__body">
+    @if (title(); as titleText) {
+      <p class="app-alert__title">{{ titleText }}</p>
+    }
+    <div class="app-alert__content">
+      <ng-content></ng-content>
+    </div>
+  </div>
+  @if (dismissible()) {
+    <app-icon-button
+      class="app-alert__dismiss"
+      icon="close"
+      ariaLabel="Dismiss alert"
+      (clicked)="dismissed.emit()"
+    ></app-icon-button>
+  }
+</div>

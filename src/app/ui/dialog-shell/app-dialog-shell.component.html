@@ -1,0 +1,7 @@
+<h2 mat-dialog-title class="app-dialog-shell__title">{{ title() }}</h2>
+<mat-dialog-content class="app-dialog-shell__content">
+  <ng-content></ng-content>
+</mat-dialog-content>
+<mat-dialog-actions class="app-dialog-shell__actions" align="end">
+  <ng-content select="[appDialogActions]"></ng-content>
+</mat-dialog-actions>

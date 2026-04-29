@@ -1,0 +1,7 @@
+<mat-toolbar color="primary" class="app-toolbar">
+  @if (title(); as titleText) {
+    <span class="app-toolbar__title">{{ titleText }}</span>
+  }
+  <span class="app-toolbar__spacer"></span>
+  <ng-content></ng-content>
+</mat-toolbar>

@@ -1,0 +1,13 @@
+<app-button
+  [variant]="variant()"
+  (clicked)="triggerPicker()"
+>
+  <ng-content></ng-content>
+</app-button>
+<input
+  #fileInput
+  class="app-file-picker__input"
+  type="file"
+  [accept]="accept()"
+  (change)="onFileSelected($event)"
+/>
