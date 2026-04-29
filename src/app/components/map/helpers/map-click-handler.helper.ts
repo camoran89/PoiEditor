@@ -10,7 +10,8 @@ export class MapClickHandler {
     const clusters = map.queryRenderedFeatures(event.point, { layers: [CLUSTER_CIRCLES_LAYER_ID] });
     if (clusters.length > 0) {
       const coordinates: Coordinates = [event.lngLat.lng, event.lngLat.lat];
-      return { type: MapClickIntentType.ClusterClicked, coordinates };
+      const clusterId = typeof clusters[0].id === 'number' ? clusters[0].id : undefined;
+      return { type: MapClickIntentType.ClusterClicked, coordinates, clusterId };
     }
     const features = map.queryRenderedFeatures(event.point, { layers: [POI_LAYER_ID] });
     if (features.length > 0) {

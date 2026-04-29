@@ -87,7 +87,7 @@ export class MapComponent implements AfterViewInit {
           intent,
           (id) => this.featureClicked.emit(id),
           (coordinates) => this.mapClicked.emit(coordinates),
-          (coordinates) => this.clusterZoomer.zoomTo(map, coordinates)
+          (coordinates, clusterId) => { void this.clusterZoomer.zoomTo(map, coordinates, clusterId); }
         );
       });
       this.readyResolver?.();

@@ -138,14 +138,13 @@ El resumen visible para el usuario muestra los conteos durante la importación (
 
 - **Sin NgRx / Redux**: un store basado en signals es suficiente para el alcance actual sin agregar ceremonia. Si la app creciera (múltiples colecciones, undo/redo, sync con servidor) introducir una librería de estado pagaría la cuota.
 - **El filtro vive en el componente App**: mantiene puro al store. Si el filtro se vuelve cross-cutting (estado en URL, persistencia) la siguiente refactor sería un `PoiFilterStore` dedicado.
-- **El zoom de cluster usa un paso fijo** en vez de `getClusterExpansionZoom`: más simple, evita la query asíncrona al source y rinde bien con el radio de cluster por defecto.
+- **El zoom de cluster usa `getClusterExpansionZoom`** de la fuente GeoJSON de MapLibre para expandir al zoom exacto en que el cluster se rompe; si el id no está disponible se usa un paso de +2 como fallback.
 - **El paso de snap es 0.0001°** (~11 m). Configurable a través del constructor de `CoordinatesSnapper` o de la constante `SNAP_GRID_STEP`.
 - **Sin backend**: el estado vive sólo en `localStorage`. Reemplazar `LocalStorageDriverService` por un driver remoto enlazado a `STORAGE_DRIVER` es un cambio de provider de una línea.
 
 ## Limitaciones y posibles mejoras
 
 - La edición conserva `category` como texto libre. Un vocabulario controlado (enum o taxonomía remota) prevendría typos.
-- La expansión de clusters usa un paso fijo en vez de `getClusterExpansionZoom`.
 - No se implementó drag-to-move; la edición de coordenadas se realiza vía re-add. Agregar handlers de drag sería directo gracias a `PoiStoreService.move()`.
 - No hay tests E2E; el proyecto incluye sólo tests unitarios.
 - No hay i18n configurado. Los textos están sólo en inglés en la UI.

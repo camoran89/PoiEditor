@@ -8,7 +8,7 @@ export class MapClickIntentDispatcher {
     intent: MapClickIntent,
     onFeatureSelected: (id: FeatureId) => void,
     onAddPointRequested: (coordinates: Coordinates) => void,
-    onClusterClicked: (coordinates: Coordinates) => void
+    onClusterClicked: (coordinates: Coordinates, clusterId?: number) => void
   ): void {
     switch (intent.type) {
       case MapClickIntentType.FeatureSelected:
@@ -23,7 +23,7 @@ export class MapClickIntentDispatcher {
         return;
       case MapClickIntentType.ClusterClicked:
         if (intent.coordinates !== undefined) {
-          onClusterClicked(intent.coordinates);
+          onClusterClicked(intent.coordinates, intent.clusterId);
         }
         return;
       case MapClickIntentType.None:

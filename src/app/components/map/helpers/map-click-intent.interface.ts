@@ -6,4 +6,5 @@ export interface MapClickIntent {
   readonly type: MapClickIntentType;
   readonly featureId?: FeatureId;
   readonly coordinates?: Coordinates;
+  readonly clusterId?: number;
 }
