@@ -1,0 +1,36 @@
+<section class="actions-bar" role="toolbar" aria-label="Editor actions">
+  <app-file-picker
+    accept=".geojson,application/geo+json,application/json"
+    (fileSelected)="importRequested.emit($event)"
+  >
+    Import GeoJSON
+  </app-file-picker>
+
+  <app-button [variant]="secondaryVariant" (clicked)="exportRequested.emit()">
+    Export
+  </app-button>
+
+  <app-button [variant]="secondaryVariant" (clicked)="saveRequested.emit()">
+    Save
+  </app-button>
+
+  <app-button
+    [variant]="addModeEnabled() ? secondaryVariant : primaryVariant"
+    [ariaPressed]="addModeEnabled()"
+    (clicked)="addModeToggled.emit()"
+  >
+    {{ addModeEnabled() ? 'Cancel add' : 'Add point' }}
+  </app-button>
+
+  <app-button
+    [variant]="snapEnabled() ? primaryVariant : secondaryVariant"
+    [ariaPressed]="snapEnabled()"
+    (clicked)="snapToggled.emit()"
+  >
+    {{ snapEnabled() ? 'Snap: on' : 'Snap: off' }}
+  </app-button>
+
+  <app-button [variant]="dangerVariant" (clicked)="clearRequested.emit()">
+    Clear
+  </app-button>
+</section>

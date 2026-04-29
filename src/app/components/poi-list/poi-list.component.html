@@ -1,0 +1,37 @@
+<app-card
+  class="poi-list"
+  [title]="'Points of interest (' + features().length + ')'"
+>
+  @if (features().length === 0) {
+    <app-empty-state
+      icon="place"
+      message="No points yet. Import a GeoJSON file or click 'Add point'."
+    ></app-empty-state>
+  } @else {
+    <ul class="poi-list__items">
+      @for (feature of features(); track feature.id) {
+        <li class="poi-item">
+          <div class="poi-item__main">
+            <span class="poi-item__name">{{ feature.properties.name }}</span>
+            <app-chip [label]="feature.properties.category | categoryLabel"></app-chip>
+            <span class="poi-item__coords">
+              {{ feature.geometry.coordinates | coordinates }}
+            </span>
+          </div>
+          <div class="poi-item__actions">
+            <app-icon-button
+              icon="edit"
+              ariaLabel="Edit point"
+              (clicked)="editRequested.emit(feature.id)"
+            ></app-icon-button>
+            <app-icon-button
+              icon="delete"
+              ariaLabel="Delete point"
+              (clicked)="deleteRequested.emit(feature.id)"
+            ></app-icon-button>
+          </div>
+        </li>
+      }
+    </ul>
+  }
+</app-card>
