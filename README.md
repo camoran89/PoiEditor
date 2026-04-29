@@ -150,14 +150,6 @@ El resumen visible para el usuario muestra los conteos durante la importación (
 - No hay tests E2E; el proyecto incluye sólo tests unitarios con Vitest.
 - El rendimiento se verificó manualmente con el dataset de ejemplo; para colecciones grandes el pipeline de importación (`GeoJsonImporterService`) podría moverse a un Web Worker.
 
-## Cómo escalar más allá de puntos
-
-Para LineStrings / Polygons la arquitectura escala limpiamente:
-- Agregar nuevos validadores de geometría junto a `point-geometry.validator.ts`.
-- Introducir variantes de `PoiFeatureFactory` por geometría (o una factory discriminada).
-- Registrar capas MapLibre dedicadas (`line` / `fill`) desde `PoiLayerRegistrar`.
-- El store, la persistencia, el importador / exportador y los helpers de filtro son geometry-agnostic y no requieren cambios más allá de ampliar el tipo `PoiGeometry`.
-
 ## Tiempo invertido
 
 Aproximadamente 6 horas efectivas, incluyendo los extras (clustering, búsqueda, snapping, a11y, tests unitarios).
